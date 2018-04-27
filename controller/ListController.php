@@ -24,7 +24,7 @@ class ListController {
         foreach($data as $dbEntry){
             $projectsList[] = array(
                 "name"=> $dbEntry['name'], 
-                "url"=> "http://localhost/Uebung3/index.php?listtype=FLOORS&parentid=".$dbEntry['id']
+                "url"=> "http://".$_SERVER["SERVER_NAME"]."/Uebung3/index.php?listtype=FLOORS&parentid=".$dbEntry['id']
             );
         }
         $outputData = array (
@@ -33,5 +33,4 @@ class ListController {
         );
         $this->jsonView->streamOutput($outputData);
     }
-    
 }
