@@ -31,9 +31,8 @@ class JsonView {
     public function streamOutput($data){
         
         //umwandlung in json string - ACHTUNG: json_encode vs. json_decode
-        $jsonOutput = json_encode($data, JSON_UNESCAPED_SLASHES);
+        $jsonOutput = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         //tatsächliche Ausgabe an den Client
         echo $jsonOutput;
-        
     }
 }
