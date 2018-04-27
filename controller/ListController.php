@@ -12,7 +12,16 @@ class ListController {
     
     public function route(){
         $listModel = new ListModel();
+        
+        $data;
+        
+        print_r(array_keys($_GET));
+        
         $data = $listModel->listProjects();
+        
+        // TODO Differentiate between different URLs
+        
+        // TODO Route depending on params given
         
         $this->formatAndDisplayData($data);
     }
