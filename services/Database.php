@@ -18,8 +18,6 @@ class Database extends PDO{
         try{
             foreach ($this->pdo->query($sql) as $row) {
                 $resultTable[] = $row;
-                echo("DB");
-                print_r($row);
             }
         } catch (PDOException $ex){
             error_log("PDO ERROR: querying database: " . $ex->getMessage()."\n".$sql);
