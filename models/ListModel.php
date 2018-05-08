@@ -14,16 +14,19 @@ class ListModel {
         $parentID = $requestParams["parentID"];
         
         switch($requestParams["listType"]):
-            case "projects":
-                return listProjects();
-            case "floors":
-                return listFloors($parentID);
-            case "rooms":
-                return listRooms($parentID);
-            case "devices":
-                return listDevices($parentID);
-            case "sensors":
-                return listSensors($parentID);
+            case "PROJECTS":
+                return $this->listProjects();
+            case "FLOORS":
+                return $this->listFloors($parentID);
+            case "ROOMS":
+                return $this->listRooms($parentID);
+            case "DEVICES":
+                return $this->listDevices($parentID);
+            case "SENSORS":
+                return $this->listSensors($parentID);
+            default:
+                $this->pageNotFound();
+                break;
         endswitch;
     }
     
@@ -54,5 +57,9 @@ class ListModel {
     private function listSensors($parentID){
         $sql = " SELECT id, name, unit, value, created FROM sensors WHERE devices_id = " . $parentID . " ";
         return $this->database->query($sql);
+    }
+    
+    private function pageNotFound(){
+        echo "The page was not found. Please try a different URL.";
     }
 }
