@@ -35,31 +35,48 @@ class ListModel {
     // argument should be a dictionary with 2 entries  -listtype and parentID
     
     private function listProjects(){
-        $sql = " SELECT id, name FROM projects ";
-        return $this->database->query($sql);
+        $currentLevel = "PROJECTS";
+        $nextLevel = "FLOORS";
+        $sql = " SELECT id, name FROM projects ";    
+        return $this->createListData($currentLevel, $nextLevel, $sql);
     }
     
     private function listFloors($parentID){
+        $currentLevel = "FLOORS";
+        $nextLevel = "ROOMS";
         $sql = " SELECT id, name, floor_count_from_basement, created FROM floors WHERE projects_id = " . $parentID . " ";
-        return $this->database->query($sql);
+        return $this->createListData($currentLevel, $nextLevel, $sql);
     }
     
     private function listRooms($parentID){
+        $currentLevel = "ROOMS";
+        $nextLevel = "DEVICES";
         $sql = " SELECT id, name, created FROM rooms WHERE floors_id = " . $parentID . " ";
-        return $this->database->query($sql);
+        return $this->createListData($currentLevel, $nextLevel, $sql);
     }
     
     private function listDevices($parentID){
+        $currentLevel = "DEVICES";
+        $nextLevel = "SENSORS";
         $sql = " SELECT id, name, created FROM devices WHERE rooms_id = " . $parentID . " ";
-        return $this->database->query($sql);
+        return $this->createListData($currentLevel, $nextLevel, $sql);
     }
     
     private function listSensors($parentID){
+        $currentLevel = "SENSORS";
+        $nextLevel = "NONE";
         $sql = " SELECT id, name, unit, value, created FROM sensors WHERE devices_id = " . $parentID . " ";
-        return $this->database->query($sql);
+        return $this->createListData($currentLevel, $nextLevel, $sql);
     }
     
     private function pageNotFound(){
         echo "The page was not found. Please try a different URL.";
+    }
+    
+    private function createListData($currentLevel, $nextLevel, $sql){
+        $listData["currentLevel"] = $currentLevel;
+        $listData["nextLevel"] = $nextLevel;
+        $listData["queryData"] = $this->database->query($sql);
+        return $listData;
     }
 }
